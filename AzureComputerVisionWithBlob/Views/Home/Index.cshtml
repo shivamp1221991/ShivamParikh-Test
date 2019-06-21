@@ -1,0 +1,62 @@
+﻿@model ImageTagProcessing
+@{
+    ViewData["Title"] = "Home Page";
+
+}
+<script src="~/js/jquery-3.4.1.min.js"></script>
+<script src="~/js/jquery.tagsinput-revisited.js"></script>
+<link href="~/css/jquery.tagsinput-revisited.css" rel="stylesheet" />
+<script src="~/js/site.js"></script>
+<br /><br />
+<div class="row">
+    <form method="post" id="formTest" enctype="multipart/form-data" asp-controller="Home" asp-action="Index" onsubmit="return Validate(this);">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="customInputFile">
+                            <div id="fileUpdate">
+                                <div id="fileUpdate-left">
+                                    <img src="~/images/file_upload_black_192x192.png" width="150px"></img>
+                                </div>
+                                <div id="fileName"></div>
+                            </div>
+                            <input type="file" id="imageUpload" name="imageUpload">
+                        </span>
+                    </div>
+                    <div class="col-md-12">
+                        <input type="submit" id="btnUpload" value="Upload" class="btn-success">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <img id="imgDemo" src="@Model.ImageURL" width="350px" />
+                <br />
+                Image ID: @Model.ImageID
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <label>Associated Tags:</label>
+                @if (Model.Tags != null)
+                {
+                    var commaseparatedValues = "";
+                    foreach (var vals in Model.Tags)
+                    {
+                        if (commaseparatedValues != "")
+                        {
+                            commaseparatedValues += ",";
+                        }
+                        commaseparatedValues += vals.ToString();
+                    }
+                <input id="form-tags-1" name="tags-1" type="text" value="@commaseparatedValues">
+                }
+                else
+                {
+                <input id="form-tags-1" disabled name="tags-1" type="text">
+                }
+
+            </div>
+        </div>
+    </form>
+</div>
